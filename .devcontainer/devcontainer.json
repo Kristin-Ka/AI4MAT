@@ -2,7 +2,12 @@
   "name": "pytorch-gpu-dev",
   "build": {
     "dockerfile": "Dockerfile",
-    "context": ".."
+    "context": "..",
+    "args": {
+      "USERNAME": "karasu",
+      "USER_UID": "1000",
+      "USER_GID": "1000"
+    }
   },
   "runArgs": [
     "--gpus=all",
@@ -23,5 +28,5 @@
       ]
     }
   },
-  "remoteUser": "root"
+  "remoteUser": "karasu"
 }
