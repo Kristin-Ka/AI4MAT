@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matprop-nn"
+version = "0.1.0"
+description = "Predict material properties from crystal structures using graph neural networks."
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas",
+    "torch>=2.1",
+    "torch-geometric",
+    "lightning>=2.0",
+    "matgl>=2.0",
+    "pymatgen-core",
+    "mp-api",
+    "ase",
+    "pyyaml",
+    "tqdm",
+    "matplotlib",
+    "scikit-learn",
+    "monty",
+]
+
+[project.optional-dependencies]
+dev = ["ruff", "pytest", "ipykernel", "jupyterlab"]
+tracking = ["mlflow", "wandb"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]

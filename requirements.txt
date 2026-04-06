@@ -1,21 +1,27 @@
 numpy
 pandas
+mp-api
+matgl>=2.0
+torch>=2.1
+# Shared libs for pip-installed CUDA torch (fixes ImportError: libcusparseLt.so.0)
+nvidia-cusparselt-cu12>=0.6
+torch-geometric
+lightning>=2.0
+torchmetrics<1.7
+pymatgen-core
+ase
+monty
 matplotlib
 scipy
 scikit-learn
 jupyterlab
 ipykernel
-opencv-python
-pillow
 tqdm
 pyyaml
-einops
-transformers
-datasets
-accelerate
-diffusers
-peft
-safetensors
-sentencepiece
 mlflow
 wandb
+
+# Model backends
+chgnet>=0.4
+alignn>=2024
+dgl

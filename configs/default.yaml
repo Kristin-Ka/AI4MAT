@@ -1,0 +1,29 @@
+data:
+  json_path: "mp_materials.json"                 # output of fetch script
+  target_key: "e_total"                          # any scalar property key in the JSON
+  cache_dir: "data/graph_cache"                  # processed PyG graph cache
+
+model:
+  arch: "tensornet"         # tensornet | chgnet | alignn
+  cutoff: 5.0               # graph edge cutoff (Å)
+  units: 64                 # hidden dim per layer
+  nblocks: 3                # number of interaction blocks
+  num_rbf: 32               # radial basis functions
+  readout_type: "weighted_atom"   # weighted_atom | reduce_atom
+  is_intensive: true        # intensive (per-formula-unit) property
+  ntargets: 1               # scalar prediction
+  activation_type: "swish"
+
+training:
+  max_epochs: 200
+  batch_size: 32
+  lr: 1.0e-3
+  decay_steps: 1000
+  decay_alpha: 0.01
+  loss: "mse_loss"
+  test_frac: 0.10
+  val_frac: 0.10
+  seed: 42
+  num_workers: 0
+  accelerator: "auto"       # auto | cpu | gpu
+  log_dir: "outputs/logs"

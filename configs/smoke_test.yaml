@@ -1,0 +1,29 @@
+data:
+  json_path: "data/test_materials.json"
+  target_key: "e_total"
+  cache_dir: "data/graph_cache_smoke"
+
+model:
+  arch: "tensornet"         # tensornet | chgnet | alignn
+  cutoff: 5.0
+  units: 32
+  nblocks: 1
+  num_rbf: 16
+  readout_type: "weighted_atom"
+  is_intensive: true
+  ntargets: 1
+  activation_type: "swish"
+
+training:
+  max_epochs: 3
+  batch_size: 8
+  lr: 1.0e-3
+  decay_steps: 100
+  decay_alpha: 0.1
+  loss: "mse_loss"
+  test_frac: 0.10
+  val_frac: 0.10
+  seed: 42
+  num_workers: 0
+  accelerator: "cpu"
+  log_dir: "outputs/logs_smoke"
