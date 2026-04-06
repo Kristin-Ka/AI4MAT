@@ -3,7 +3,7 @@ __pycache__/
 .venv/
 .env
 .ipynb_checkpoints/
-data/
+data/test_materials.json
 outputs/
 wandb/
 mlruns/
@@ -29,3 +29,4 @@ build/
 notebooks/02_structure_representation_basics.ipynb
 notebooks/03_first_dielectric_baseline.ipynb
 notebooks/04_model_comparison.ipynb
+
