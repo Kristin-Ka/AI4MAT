@@ -46,15 +46,24 @@ DEFAULT_PROPERTY_FIELDS = [
     "property_name",
 ]
 
+# Extra fields fetched from the summary endpoint and merged into each record.
+SUMMARY_EXTRA_FIELDS = [
+    "band_gap",
+    "energy_above_hull",
+]
+
 SUMMARY_FIELDS = [
     "material_id",
     "structure",
-]
+] + SUMMARY_EXTRA_FIELDS
 
 
 def doc_to_record(doc) -> dict:
     """Convert an API document to a JSON-safe dict, serialising pymatgen objects."""
     data = doc.model_dump()
+    # Normalise material_id to the canonical numeric string form (e.g. "mp-149")
+    # because model_dump() may return the base-36 encoded form (e.g. "mp-ft").
+    data["material_id"] = str(doc.material_id)
     st = getattr(doc, "structure", None)
     if st is not None and hasattr(st, "as_dict"):
         data["structure"] = st.as_dict()
@@ -105,27 +114,30 @@ def fetch_property_docs(
     return all_docs
 
 
-def fetch_structures(
+def fetch_summary_data(
     mpr: MPRester,
     material_ids: list[str],
     *,
     batch_size: int,
 ) -> dict:
-    """Return {material_id: structure_dict} from the summary endpoint."""
-    struct_map: dict = {}
+    """Return {material_id: {structure, band_gap, energy_above_hull, ...}} from summary."""
+    summary_map: dict = {}
     for batch in tqdm(
         list(batched(material_ids, batch_size)),
-        desc="summary.search (structures)",
+        desc="summary.search (structures + extras)",
         unit="batch",
     ):
         docs = mpr.materials.summary.search(material_ids=batch, fields=SUMMARY_FIELDS)
         for d in docs:
+            mid = str(d.material_id)
             st = getattr(d, "structure", None)
-            if st is not None and hasattr(st, "as_dict"):
-                struct_map[str(d.material_id)] = st.as_dict()
-            else:
-                struct_map[str(d.material_id)] = None
-    return struct_map
+            entry: dict = {
+                "structure": st.as_dict() if st is not None and hasattr(st, "as_dict") else None,
+            }
+            for field in SUMMARY_EXTRA_FIELDS:
+                entry[field] = getattr(d, field, None)
+            summary_map[mid] = entry
+    return summary_map
 
 
 def parse_args() -> argparse.Namespace:
@@ -221,13 +233,16 @@ def main() -> int:
         )
 
         fetched_ids = [str(d.material_id) for d in docs]
-        print(f"Fetching structures for {len(fetched_ids)} material(s)...")
-        struct_map = fetch_structures(mpr, fetched_ids, batch_size=args.batch_size)
+        print(f"Fetching structures + summary extras for {len(fetched_ids)} material(s)...")
+        summary_map = fetch_summary_data(mpr, fetched_ids, batch_size=args.batch_size)
 
     records = [doc_to_record(d) for d in docs]
     for rec in records:
         mid = str(rec.get("material_id", ""))
-        rec["structure"] = jsanitize(struct_map.get(mid))
+        entry = summary_map.get(mid, {})
+        rec["structure"] = jsanitize(entry.get("structure"))
+        for field in SUMMARY_EXTRA_FIELDS:
+            rec[field] = entry.get(field)
     df = pd.DataFrame.from_records(records)
 
     args.out_json.parent.mkdir(parents=True, exist_ok=True)
