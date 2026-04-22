@@ -1,0 +1,9 @@
+task:
+  name: "energy_above_hull"
+  target_key: "energy_above_hull"
+  friendly_name: "Energy Above Hull (eV)"
+
+data:
+  json_path: "mp_materials.json"
+  split_file: "data/splits/split_energy_above_hull.json"
+  feature_file: "data/processed/matminer_features.parquet"

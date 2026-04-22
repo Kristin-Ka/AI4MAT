@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Thin CLI wrapper around matprop_nn.datasets.fetch.fetch_mp_data."""
+"""Download MP material property data (dielectric + band gap + energy above hull).
+
+This script uses the comprehensive fetch_mp_dataset.py fetcher under the hood
+or the matprop_nn library directly for a clean interface.
+
+Usage:
+    python scripts/fetch_data.py --api-key YOUR_KEY --out-json mp_materials.json
+
+    # Or with env var:
+    MP_API_KEY=YOUR_KEY python scripts/fetch_data.py
+"""
 
 from __future__ import annotations
 
@@ -8,7 +18,7 @@ import logging
 import os
 import sys
 
-from matprop_nn.datasets.fetch import fetch_mp_data
+logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(name)s | %(message)s")
 
 
 def main() -> int:
@@ -23,7 +33,7 @@ def main() -> int:
         print("Error: set MP_API_KEY or pass --api-key.", file=sys.stderr)
         return 1
 
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(name)s | %(message)s")
+    from matprop_nn.datasets.fetch import fetch_mp_data
     df = fetch_mp_data(
         api_key=args.api_key,
         out_json=args.out_json,

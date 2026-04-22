@@ -1,0 +1,19 @@
+model:
+  arch: "m3gnet"
+  cutoff: 5.0
+  units: 64
+  nblocks: 3
+  readout_type: "weighted_atom"
+  is_intensive: true
+  ntargets: 1
+
+training:
+  max_epochs: 200
+  batch_size: 32
+  lr: 1.0e-3
+  weight_decay: 0.0
+  patience: 20
+  seed: 42
+  num_workers: 0
+  accelerator: "auto"
+  log_dir: "results/m3gnet"

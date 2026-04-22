@@ -1,0 +1,15 @@
+model:
+  arch: "mlp"
+  feature_groups: ["composition", "density"]
+  hidden_dims: [256, 128, 64]
+  dropout: 0.1
+
+training:
+  max_epochs: 200
+  batch_size: 256
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  patience: 20
+  seed: 42
+  accelerator: "auto"
+  log_dir: "results/mlp"

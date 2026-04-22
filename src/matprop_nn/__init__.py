@@ -1,1 +1,1 @@
-"""matprop-nn: graph neural networks for material property prediction."""
+"""matprop-nn: benchmark pipeline for crystal-property prediction."""

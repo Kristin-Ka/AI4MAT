@@ -15,7 +15,7 @@ from typing import Any
 
 import torch
 import lightning as L
-from torchmetrics import MeanAbsoluteError, MeanSquaredError
+from torchmetrics import MeanAbsoluteError, MeanSquaredError, R2Score
 
 from matprop_nn.models._base import ModelEngine
 
@@ -46,15 +46,17 @@ class RegressionModule(L.LightningModule):
         self.loss_fn = torch.nn.MSELoss()
         self.mae = MeanAbsoluteError()
         self.rmse = MeanSquaredError(squared=False)
+        self.r2 = R2Score()
 
-    # ------------------------------------------------------------------
+        self._test_preds: list[torch.Tensor] = []
+        self._test_labels: list[torch.Tensor] = []
+
     def forward(self, batch):
         preds, labels, _ = self.engine.step(
             self.model, batch, self.data_mean, self.data_std,
         )
         return preds, labels
 
-    # ------------------------------------------------------------------
     def _shared_step(self, batch, stage: str):
         preds, labels, bs = self.engine.step(
             self.model, batch, self.data_mean, self.data_std,
@@ -71,9 +73,24 @@ class RegressionModule(L.LightningModule):
 
         mae = self.mae(preds_orig, labels_orig)
         rmse = self.rmse(preds_orig, labels_orig)
+        r2 = self.r2(preds_orig, labels_orig)
         self.log(f"{stage}_MAE", mae, batch_size=bs, prog_bar=True)
         self.log(f"{stage}_RMSE", rmse, batch_size=bs, prog_bar=False)
+        self.log(f"{stage}_R2", r2, batch_size=bs, prog_bar=False)
+
+        if stage == "test":
+            self._test_preds.append(preds_orig.cpu())
+            self._test_labels.append(labels_orig.cpu())
+
         return loss
+
+    def on_test_epoch_start(self):
+        self._test_preds = []
+        self._test_labels = []
+
+    def get_test_predictions(self) -> tuple[torch.Tensor, torch.Tensor]:
+        """Return (all_preds, all_labels) collected during test."""
+        return torch.cat(self._test_preds), torch.cat(self._test_labels)
 
     def training_step(self, batch, batch_idx):
         return self._shared_step(batch, "train")
@@ -84,7 +101,6 @@ class RegressionModule(L.LightningModule):
     def test_step(self, batch, batch_idx):
         return self._shared_step(batch, "test")
 
-    # ------------------------------------------------------------------
     def configure_optimizers(self):
         opt = torch.optim.Adam(
             self.parameters(), lr=self.lr, weight_decay=self.weight_decay,

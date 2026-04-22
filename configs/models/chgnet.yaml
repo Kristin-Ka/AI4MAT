@@ -1,0 +1,17 @@
+model:
+  arch: "chgnet"
+  pretrained: true
+  cutoff: 5.0
+  units: 64
+  nblocks: 3
+
+training:
+  max_epochs: 200
+  batch_size: 16
+  lr: 1.0e-4
+  weight_decay: 0.0
+  patience: 20
+  seed: 42
+  num_workers: 0
+  accelerator: "auto"
+  log_dir: "results/chgnet"

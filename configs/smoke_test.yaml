@@ -4,7 +4,7 @@ data:
   cache_dir: "data/graph_cache_smoke"
 
 model:
-  arch: "tensornet"         # tensornet | chgnet | alignn
+  arch: "tensornet"
   cutoff: 5.0
   units: 32
   nblocks: 1
@@ -18,9 +18,7 @@ training:
   max_epochs: 3
   batch_size: 8
   lr: 1.0e-3
-  decay_steps: 100
-  decay_alpha: 0.1
-  loss: "mse_loss"
+  patience: 5
   test_frac: 0.10
   val_frac: 0.10
   seed: 42

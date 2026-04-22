@@ -1,0 +1,9 @@
+task:
+  name: "total_dielectric"
+  target_key: "e_total"
+  friendly_name: "Total Dielectric (ε total)"
+
+data:
+  json_path: "mp_materials.json"
+  split_file: "data/splits/split_total_dielectric.json"
+  feature_file: "data/processed/matminer_features.parquet"

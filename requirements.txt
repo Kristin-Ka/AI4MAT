@@ -1,5 +1,6 @@
 numpy
 pandas
+pyarrow
 mp-api
 matgl>=2.0
 torch>=2.1
@@ -7,7 +8,7 @@ torch>=2.1
 nvidia-cusparselt-cu12>=0.6
 torch-geometric
 lightning>=2.0
-torchmetrics<1.7
+torchmetrics
 pymatgen-core
 ase
 monty
@@ -21,7 +22,12 @@ pyyaml
 mlflow
 wandb
 
-# Model backends
+# Descriptor models
+xgboost
+matminer
+tabulate
+
+# GNN model backends
 chgnet>=0.4
 alignn>=2024
 dgl

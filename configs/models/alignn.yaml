@@ -1,0 +1,21 @@
+model:
+  arch: "alignn"
+  cutoff: 8.0
+  max_neighbors: 12
+  alignn_layers: 4
+  gcn_layers: 4
+  units: 64
+  hidden_features: 256
+  atom_input_features: 92
+  edge_input_features: 80
+
+training:
+  max_epochs: 200
+  batch_size: 32
+  lr: 1.0e-3
+  weight_decay: 0.0
+  patience: 20
+  seed: 42
+  num_workers: 0
+  accelerator: "auto"
+  log_dir: "results/alignn"

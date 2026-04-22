@@ -4,15 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "matprop-nn"
-version = "0.1.0"
-description = "Predict material properties from crystal structures using graph neural networks."
+version = "0.2.0"
+description = "Benchmark pipeline for crystal-property prediction using Materials Project data."
 requires-python = ">=3.10"
 dependencies = [
     "numpy",
     "pandas",
+    "pyarrow",
     "torch>=2.1",
     "torch-geometric",
     "lightning>=2.0",
+    "torchmetrics",
     "matgl>=2.0",
     "pymatgen-core",
     "mp-api",
@@ -22,11 +24,15 @@ dependencies = [
     "matplotlib",
     "scikit-learn",
     "monty",
+    "xgboost",
+    "matminer",
+    "tabulate",
 ]
 
 [project.optional-dependencies]
 dev = ["ruff", "pytest", "ipykernel", "jupyterlab"]
 tracking = ["mlflow", "wandb"]
+gnn = ["chgnet>=0.4", "alignn>=2024", "dgl"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

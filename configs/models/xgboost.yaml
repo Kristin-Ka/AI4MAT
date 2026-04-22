@@ -1,0 +1,14 @@
+model:
+  arch: "xgboost"
+  feature_groups: ["composition", "density"]
+  n_estimators: 500
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+
+training:
+  patience: 30
+  seed: 42
+  log_dir: "results/xgboost"
+  n_jobs: -1

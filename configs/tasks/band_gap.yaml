@@ -1,0 +1,9 @@
+task:
+  name: "band_gap"
+  target_key: "band_gap"
+  friendly_name: "Band Gap (eV)"
+
+data:
+  json_path: "mp_materials.json"
+  split_file: "data/splits/split_band_gap.json"
+  feature_file: "data/processed/matminer_features.parquet"
