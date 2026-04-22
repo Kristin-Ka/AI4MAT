@@ -155,8 +155,9 @@ def main() -> int:
         featurizer = MatminerFeaturizer(
             feature_groups=["composition", "density"],
             n_jobs=args.n_jobs,
+            cache_dir=args.out_dir / "_feat_cache",
         )
-        feat_df = featurizer.featurize_df(df)
+        feat_df = featurizer.featurize_df(df, material_ids=mids)
         featurizer.save_features(feat_df.values, mids, args.out_dir / "matminer_features.parquet")
 
     logger.info("Preprocessing complete.")

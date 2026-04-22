@@ -92,6 +92,12 @@ class RegressionModule(L.LightningModule):
         """Return (all_preds, all_labels) collected during test."""
         return torch.cat(self._test_preds), torch.cat(self._test_labels)
 
+    def reset_test_predictions(self) -> None:
+        """Clear cached test predictions (used to re-use the test hook on
+        the training loader to get a parity-plot train overlay)."""
+        self._test_preds = []
+        self._test_labels = []
+
     def training_step(self, batch, batch_idx):
         return self._shared_step(batch, "train")
 

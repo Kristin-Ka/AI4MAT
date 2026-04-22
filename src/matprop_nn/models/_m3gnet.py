@@ -73,7 +73,7 @@ class M3GNetEngine(ModelEngine):
             structures=structures,
             labels={target_key: targets},
             converter=converter,
-            root=cache_dir,
+            directory_name=cache_dir,
             save_cache=True,
         )
         return (

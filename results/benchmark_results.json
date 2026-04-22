@@ -1,0 +1,22 @@
+[
+  {
+    "property_name": "band_gap",
+    "model_name": "mlp",
+    "n_train": 125452,
+    "n_val": 13939,
+    "n_test": 15488,
+    "rmse": 0.7259096981315285,
+    "mae": 0.4358868183718091,
+    "r2": 0.7701397457397372
+  },
+  {
+    "property_name": "energy_above_hull",
+    "model_name": "mlp",
+    "n_train": 125452,
+    "n_val": 13939,
+    "n_test": 15488,
+    "rmse": 0.1303646572052599,
+    "mae": 0.06098385919296606,
+    "r2": 0.6708993651620178
+  }
+]

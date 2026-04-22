@@ -1,0 +1,12 @@
+model:
+  arch: "xgboost"
+  feature_groups: ['elem_prop', 'density']
+  n_estimators: 3000
+  max_depth: 7
+  learning_rate: 0.03
+  min_child_weight: 1
+  subsample: 1.0
+  colsample_bytree: 0.9
+  gamma: 0.0
+  reg_alpha: 0.0
+  reg_lambda: 1.0

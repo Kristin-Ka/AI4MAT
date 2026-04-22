@@ -1,0 +1,26 @@
+model:
+  arch: "xgboost"
+  # "MatMiner3D" baseline: composition + density + true 3D structure
+  # descriptors (crystal symmetry + packing + bond heterogeneity +
+  # chemical ordering). Matches the Petousis 2017 / Schrödinger slide
+  # and gives a fair descriptor-vs-graph comparison.
+  feature_groups: ["elem_prop", "density", "structure3d"]
+
+  # Same hyperparameters as the composition-only baseline so any R²
+  # gain comes strictly from the additional 3D features, not tuning.
+  n_estimators: 3000
+  max_depth: 7
+  learning_rate: 0.03
+  min_child_weight: 1
+  subsample: 1.0
+  colsample_bytree: 0.9
+  gamma: 0.0
+  reg_alpha: 0.0
+  reg_lambda: 1.0
+
+training:
+  patience: 50
+  seed: 42
+  log_dir: "results/xgboost_3d"
+  featurizer_n_jobs: 2
+  feature_importance_top_k: 30

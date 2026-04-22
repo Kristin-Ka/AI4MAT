@@ -1,6 +1,7 @@
 model:
   arch: "mlp"
-  feature_groups: ["composition", "density"]
+  # Matches the xgboost baseline feature set (Magpie + density = 135 feats).
+  feature_groups: ["elem_prop", "density"]
   hidden_dims: [256, 128, 64]
   dropout: 0.1
 
@@ -13,3 +14,5 @@ training:
   seed: 42
   accelerator: "auto"
   log_dir: "results/mlp"
+  featurizer_n_jobs: 2    # 2 workers keeps RSS ~5 GB on 150k rows
+

@@ -1,0 +1,53 @@
+INFO | __main__ | ============================================================
+[1/8] Task: e_total | Model: alignn
+============================================================
+INFO | matprop_nn.tasks.train | Architecture: alignn | Target: e_total
+INFO | matprop_nn.tasks.train | Loaded 7327 structures with target 'e_total'.
+INFO | matprop_nn.tasks.train | Target stats — mean: 50.7444  std: 1650.8121  min: 1.1552  max: 126575.3168  N=7327
+INFO | matprop_nn.tasks.train | Target transform: log1p
+INFO | matprop_nn.tasks.train | Loading existing split from data/splits/split_total_dielectric.json
+INFO | matprop_nn.tasks.train | Split sizes: train=6594  val=0  test=733
+INFO | matprop_nn.tasks.train | Graph model: carved val fold from train → train=5935  val=659  test=733
+INFO | matprop_nn.models._alignn | Converting 7327 structures to ALIGNN DGL graphs...
+INFO: GPU available: True (cuda), used: True
+INFO | lightning.pytorch.utilities.rank_zero | GPU available: True (cuda), used: True
+INFO: TPU available: False, using: 0 TPU cores
+INFO | lightning.pytorch.utilities.rank_zero | TPU available: False, using: 0 TPU cores
+INFO: 💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+INFO | lightning.pytorch.utilities.rank_zero | 💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+INFO: You are using a CUDA device ('NVIDIA GeForce RTX 4090') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+INFO | lightning.pytorch.utilities.rank_zero | You are using a CUDA device ('NVIDIA GeForce RTX 4090') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+INFO: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+INFO | lightning.pytorch.accelerators.cuda | LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+┏━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━┓
+┃   ┃ Name    ┃ Type              ┃ Params ┃ Mode  ┃ FLOPs ┃
+┡━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━┩
+│ 0 │ model   │ ALIGNN            │  4.0 M │ train │     0 │
+│ 1 │ loss_fn │ MSELoss           │      0 │ train │     0 │
+│ 2 │ mae     │ MeanAbsoluteError │      0 │ train │     0 │
+│ 3 │ rmse    │ MeanSquaredError  │      0 │ train │     0 │
+│ 4 │ r2      │ R2Score           │      0 │ train │     0 │
+└───┴─────────┴───────────────────┴────────┴───────┴───────┘
+Trainable params: 4.0 M                                                         
+Non-trainable params: 0                                                         
+Total params: 4.0 M                                                             
+Total estimated model params size (MB): 16                                      
+Modules in train mode: 139                                                      
+Modules in eval mode: 0                                                         
+Total FLOPs: 0                                                                  
+/home/karasu/.local/lib/python3.11/site-packages/lightning/pytorch/trainer/conne
+ctors/data_connector.py:434: The 'val_dataloader' does not have many workers 
+which may be a bottleneck. Consider increasing the value of the `num_workers` 
+argument` to `num_workers=23` in the `DataLoader` to improve performance.
+/home/karasu/.local/lib/python3.11/site-packages/lightning/pytorch/trainer/conne
+ctors/data_connector.py:434: The 'train_dataloader' does not have many workers 
+which may be a bottleneck. Consider increasing the value of the `num_workers` 
+argument` to `num_workers=23` in the `DataLoader` to improve performance.
+INFO: [rank: 0] Received SIGTERM: 15
+INFO | lightning.pytorch.trainer.connectors.signal_connector | [rank: 0] Received SIGTERM: 15
+Epoch 31/199 ━━━━━━━          87/186 0:00:09 •        8.91it/s v_num: 0.000     
+                                     0:00:12                   train_loss: 0.058
+                                                               train_MAE: 0.166 
+                                                               val_loss: 0.202  
+                                                               val_MAE: 0.267   
+

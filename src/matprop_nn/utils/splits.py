@@ -39,10 +39,16 @@ def create_splits(
     train_val_idx, test_idx = train_test_split(
         indices, test_size=test_frac, random_state=seed,
     )
-    relative_val = val_frac / (1.0 - test_frac)
-    train_idx, val_idx = train_test_split(
-        train_val_idx, test_size=relative_val, random_state=seed,
-    )
+    if val_frac > 0:
+        relative_val = val_frac / (1.0 - test_frac)
+        train_idx, val_idx = train_test_split(
+            train_val_idx, test_size=relative_val, random_state=seed,
+        )
+    else:
+        # No held-out val split — callers that need one (e.g. XGBoost
+        # early stopping) can carve a small portion from train.
+        train_idx = train_val_idx
+        val_idx = np.array([], dtype=int)
 
     split = {
         "seed": seed,

@@ -4,7 +4,6 @@ pyarrow
 mp-api
 matgl>=2.0
 torch>=2.1
-# Shared libs for pip-installed CUDA torch (fixes ImportError: libcusparseLt.so.0)
 nvidia-cusparselt-cu12>=0.6
 torch-geometric
 lightning>=2.0
@@ -21,13 +20,9 @@ tqdm
 pyyaml
 mlflow
 wandb
-
-# Descriptor models
 xgboost
 matminer
 tabulate
-
-# GNN model backends
 chgnet>=0.4
 alignn>=2024
 dgl

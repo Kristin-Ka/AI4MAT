@@ -2,8 +2,12 @@ task:
   name: "ionic_dielectric"
   target_key: "e_ionic"
   friendly_name: "Ionic Dielectric (ε ionic)"
+  # Same heavy-tailed behaviour as e_total — train in log-space.
+  target_transform: "log1p"
 
 data:
   json_path: "mp_materials.json"
   split_file: "data/splits/split_ionic_dielectric.json"
   feature_file: "data/processed/matminer_features.parquet"
+  test_frac: 0.10
+  val_frac: 0.0

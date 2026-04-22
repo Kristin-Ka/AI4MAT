@@ -2,8 +2,15 @@ task:
   name: "energy_above_hull"
   target_key: "energy_above_hull"
   friendly_name: "Energy Above Hull (eV)"
+  # e_above_hull is ≥ 0 with a long right tail (a few very unstable phases
+  # at several eV/atom).  log1p compresses the tail while preserving 0.
+  target_transform: "log1p"
 
 data:
-  json_path: "mp_materials.json"
+  # Full MP summary (~150k materials) — downloaded via
+  #   python scripts/fetch_data.py --task summary --out mp_summary.jsonl
+  json_path: "mp_summary.jsonl"
   split_file: "data/splits/split_energy_above_hull.json"
   feature_file: "data/processed/matminer_features.parquet"
+  test_frac: 0.10
+  val_frac: 0.0

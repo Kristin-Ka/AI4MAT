@@ -4,6 +4,11 @@ task:
   friendly_name: "Band Gap (eV)"
 
 data:
-  json_path: "mp_materials.json"
+  # Full MP summary (~150k materials) — downloaded via
+  #   python scripts/fetch_data.py --task summary --out mp_summary.jsonl
+  # Falls back to mp_materials.json if the larger file is not present.
+  json_path: "mp_summary.jsonl"
   split_file: "data/splits/split_band_gap.json"
   feature_file: "data/processed/matminer_features.parquet"
+  test_frac: 0.10
+  val_frac: 0.0

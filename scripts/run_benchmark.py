@@ -36,13 +36,18 @@ TASK_CONFIGS = {
 MODEL_CONFIGS = {
     "xgboost": "configs/models/xgboost.yaml",
     "mlp": "configs/models/mlp.yaml",
+    "xgboost_3d": "configs/models/xgboost_3d.yaml",
+    "mlp_3d": "configs/models/mlp_3d.yaml",
     "tensornet": "configs/models/tensornet.yaml",
     "m3gnet": "configs/models/m3gnet.yaml",
     "chgnet": "configs/models/chgnet.yaml",
     "alignn": "configs/models/alignn.yaml",
 }
 
-DEFAULT_MODEL_ORDER = ["xgboost", "mlp", "tensornet", "m3gnet", "chgnet", "alignn"]
+DEFAULT_MODEL_ORDER = [
+    "xgboost", "mlp", "xgboost_3d", "mlp_3d",
+    "tensornet", "m3gnet", "chgnet", "alignn",
+]
 DEFAULT_TASK_ORDER = ["e_total", "e_ionic", "band_gap", "energy_above_hull"]
 
 

@@ -1,0 +1,18 @@
+model:
+  arch: "mlp"
+  # "MatMiner3D" MLP: same architecture as mlp.yaml but with 3D
+  # structure descriptors appended to the feature matrix.
+  feature_groups: ["elem_prop", "density", "structure3d"]
+  hidden_dims: [256, 128, 64]
+  dropout: 0.1
+
+training:
+  max_epochs: 200
+  batch_size: 256
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  patience: 20
+  seed: 42
+  accelerator: "auto"
+  log_dir: "results/mlp_3d"
+  featurizer_n_jobs: 2

@@ -1,14 +1,26 @@
 model:
   arch: "xgboost"
-  feature_groups: ["composition", "density"]
-  n_estimators: 500
-  max_depth: 6
-  learning_rate: 0.05
-  subsample: 0.8
-  colsample_bytree: 0.8
+  # 132 (Magpie ElementProperty) + 3 (DensityFeatures) = 135 features,
+  # matching the Ward-2016 / Matbench composition-only baseline.
+  # Swap to ["composition", "density"] for the full 152-feature pipeline.
+  feature_groups: ["elem_prop", "density"]
+
+  # Chosen by scripts/sweep_xgboost.py (72-config grid on the 90:10 split
+  # of e_total, log1p target).  Best R²(log) = 0.6334 — reproduces the
+  # matminer-style baseline from the Petousis 2017 paper.
+  n_estimators: 3000
+  max_depth: 7
+  learning_rate: 0.03
+  min_child_weight: 1
+  subsample: 1.0
+  colsample_bytree: 0.9
+  gamma: 0.0
+  reg_alpha: 0.0
+  reg_lambda: 1.0
 
 training:
-  patience: 30
+  patience: 50
   seed: 42
   log_dir: "results/xgboost"
-  n_jobs: -1
+  featurizer_n_jobs: 2  # 2 workers keeps RSS ~5 GB on 150k rows (4 workers thrashed swap)
+  feature_importance_top_k: 30

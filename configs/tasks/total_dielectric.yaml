@@ -2,8 +2,17 @@ task:
   name: "total_dielectric"
   target_key: "e_total"
   friendly_name: "Total Dielectric (ε total)"
+  # Dielectric constants are heavy-tailed (min ≈ 1, max > 10^5 with ~3
+  # near-unstable outliers).  Training in log-space matches Matbench /
+  # Petousis 2017 practice; metrics are still reported in original units.
+  target_transform: "log1p"
 
 data:
   json_path: "mp_materials.json"
   split_file: "data/splits/split_total_dielectric.json"
   feature_file: "data/processed/matminer_features.parquet"
+  # 90 : 10 train : test (matches the original Petousis / matminer paper).
+  # Descriptor models carve a small val subset out of train internally for
+  # early stopping; graph models will auto-carve a val fold when needed.
+  test_frac: 0.10
+  val_frac: 0.0
